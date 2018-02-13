@@ -24,17 +24,15 @@ function addName(e){
 		})
 		$(tmp_div).prepend(tmp_btn);
 		$('#placed_users').append(tmp_div);
-		// $('#placed_users').css('clear', 'both');
-
-		// Now we need to add a button to it, lol
-		// I assume there might be a smarter way? shrug
-
-
-
 } 
+
+// I believe this $(function(){}); is essentially like a window.onload?
+// Would be good to find out when this is called on the js stack
 $( function() {
+	// Handling clicking of our button
 	$('#gobutton').click(addName);
 
+	// Handling pressing enter in the text field
 	$('#inputtext').on('keypress', function(e){
 		if (e.which === 13){
 			addName(e);
