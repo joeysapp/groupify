@@ -1,8 +1,13 @@
 # groupify
-Using Spotify's API, find common music elements in a group of users
+This web app is a group project for CSCE445. We have plans to utilize Spotify's Web api, node, express, socket.io and several other node packages to deliver a unique and meaningful experience.
 
-# Technologies Used
-node.js, express, p5.js
+## Technologies Used
+* JavaScript ES6
+* node
+** express
+** socket.io
+** p5.js
+* jquery/html/css
 
 # Usage
 1. Clone repo
