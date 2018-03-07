@@ -19,6 +19,10 @@ $(document).ready(function() {
 		if ($('#inputtext').val().length > 0){
 			console.log("client.socket.emit->"+"authenticateUser("+$('#inputtext').val()+")");
 			socket.emit('authenticateUser', $('#inputtext').val());
+
+			$('#preinit').remove();
+			$('#loggedin').show();
+			$('#loggedin').css("display","flex");
 		}
 	});
 

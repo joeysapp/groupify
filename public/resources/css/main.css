@@ -4,11 +4,12 @@ body {
 	background: rgb(41,41,41);
 }
 
+
+
 input {
 	font-family: Inconsolata-Regular;
 	font-size: 4vw;
 	height:100%;
-	width:50%;
 	font-color:red;
 	text-align:center;
 }
@@ -17,18 +18,27 @@ button {
 	font-size: 4vw;
 	height:100%;
 	/*width:40%;*/
-	width:25%;
+
+ }
+
+#username {
+	font-size: 4vw;
+	align-items: center;
+	display: flex;
+	text-align:center;
 }
 
 #title {
 	font-size: 4vw;
-	width:25%;
+	width:20vw;
 	text-align:center;
 }
 
 .navbar {
-	height: 15vh;
+	height: 14vh;
 	display: flex;
 	align-items: center;
 	background-color: white;
+	box-sizing:border-box;
+	margin:0px;
 }

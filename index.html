@@ -21,8 +21,16 @@
 <body>
 	<div class="navbar">
 		<div id="title">groupify</div>
-		<input id="inputtext" type="text" name="username" placeholder="spotify username">
-		<button id="inputbutton">go</button>
+		<div id="userStatus" style="width:80vmin">
+			<div id="preinit">
+				<input id="inputtext" type="text" name="username" placeholder="spotify username" style="width:60vmin; padding:0px; margin:0px; border-color:rgb(41,41,41)">
+				<button id="inputbutton" style="width:18.7vmin; padding:0px; margin:0px">go</button>
+			</div>
+			<div id="loggedin" style="display:none">
+				<div id="username" style="width:60vmin;">burp</div>
+				<button id="logoutbutton" style="width:20vmin;">logout</button>
+			</div>
+		</div>
 	</div>
 	<div id="clients"></div>
 	</div>
