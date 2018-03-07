@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 
 // Web sockets
-var clients = [];
+var clients = {};
 var ID = 0; // this should be a hash later if we really care
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -12,31 +12,32 @@ var path = require('path');
 var useragent = require('useragent');
 
 server.listen(8000, "0.0.0.0", function(){
-	console.log("\tgroupify.server running: "+server.address());
-	console.log("\tgroupify.app running: "+app)
+	console.log("groupify.server running");
 });
 
 // Socket details
 io.on('connection', function(socket){
+	clients[socket.id] = socket;
+	// socket.emit('init', clients);
+	console.log('socket.clients['+socket.id+"] connected");
 
-	clients.push({
-		id: ID++,
-		socket: socket
+	socket.on('disconnect', function(){
+		console.log('socket.clients['+socket.id+"] disconnected");
+		delete clients[socket.id];
 	});
 
-	console.log("clients: "+clients.length);
-
-
-	socket.on('socket_emission_from_client', function(data){
-		console.log('server-side socket_emission_from_client received');
-
-		// THIS DOES NOT GO BACK TO SENDER.
-		// socket.broadcast.emit('placeDot', data);
-
-		// THIS DOES.
-		// io.sockets.emit('mouse_was_clicked', data);
-	});
 });
+
+// So this could be used to select a client and do something to them!
+// i.e. collision detection or something..
+// followersManager.on('connection', function (followerName) {
+//     // Find the given socket in any way
+//     var socket = clients.find(function (client) {
+//         return client.id == 1;
+//     }, this);
+//     // Then use this special socket
+//     socket.emit('followers.new', followerName);
+// });
 
 app.use(express.static('public'));
 
