@@ -20,6 +20,7 @@
   "dependencies": {
     "express": "^4.16.2",
     "path": "^0.12.7",
-    "socket.io": "^2.0.4"
+    "socket.io": "^2.0.4",
+    "spotify-web-api-node": "^2.5.0"
   }
 }
