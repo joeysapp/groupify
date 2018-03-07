@@ -16,13 +16,23 @@ $(document).ready(function() {
 
 	// Handling clicking of our button
 	$('#inputbutton').click(function(e){
-		if ($('#inputtext').val().length > 0){
+		// We are assuming the input is not malicious or anything
+		var username = $('#inputtext').val();
+
+		// validator-js
+		// get that^
+		if (username.length > 0){
 			console.log("client.socket.emit->"+"authenticateUser("+$('#inputtext').val()+")");
 			socket.emit('authenticateUser', $('#inputtext').val());
 
 			$('#preinit').remove();
 			$('#loggedin').show();
 			$('#loggedin').css("display","flex");
+			$('#username').html(username);
+			this.username = username;
+
+		} else {
+			console.log("Enter a username!");
 		}
 	});
 

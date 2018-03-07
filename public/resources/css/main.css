@@ -4,28 +4,37 @@ body {
 	background: rgb(41,41,41);
 }
 
+button {
+		font-family: Inconsolata-Regular;
+		font-size:4vw;
+		/*text-shadow: 2px 2px black;*/
+		color: black;
+		/*border-radius:2px;*/
+
+}
+
+/*rgb(25,213,72)*/
 
 
 input {
 	font-family: Inconsolata-Regular;
-	font-size: 4vw;
+	font-size: 2.5vw;
 	height:100%;
 	font-color:red;
-	text-align:center;
 	display:inline;
+	text-indent: 4vh;
 }
 
 #user_status {
 
-	width:80vmin
+	width:80vw;
+	display:flex;
 }
 
 .mmb {
 	font-family: Inconsolata-Regular;
-	font-size: 4vw;
-	height:100%;
-	width:20vw;
-	display:inline;
+	/*font-size: 4vw;*/
+
 }
 
 #username {
