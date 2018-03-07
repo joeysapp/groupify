@@ -4,9 +4,9 @@ This web app is a group project for CSCE445. We have plans to utilize Spotify's 
 ## Technologies Used
 * JavaScript ES6
 * node
- * express
- * socket.io
- * p5.js
+  * express
+  * socket.io
+  * p5.js
 * jquery/html/css
 
 ## Usage
