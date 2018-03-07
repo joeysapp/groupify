@@ -6,7 +6,7 @@ body {
 
 input {
 	font-family: Inconsolata-Regular;
-	font-size: 2em;
+	font-size: 4vw;
 	height:100%;
 	width:50%;
 	font-color:red;
@@ -14,19 +14,16 @@ input {
 }
 
 button {
-	font-size: 2em;
+	font-size: 4vw;
 	height:100%;
 	/*width:40%;*/
 	width:25%;
 }
 
 #title {
-	font-size:2em;
+	font-size: 4vw;
 	width:25%;
-	overflow: hidden;
 	text-align:center;
-	/*padding-right: 1em;*/
-	/*padding-bottom:0.25em;*/
 }
 
 .navbar {

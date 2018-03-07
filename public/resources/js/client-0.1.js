@@ -8,9 +8,14 @@ class Client {
 	}
 
 	display(){
-
 		rect(this.pos.x, this.pos.y, 50, 50);
 	}
+
+	setName(name){
+		this.name = name;
+	}
+
+	
 };
 
 module.exports = Client;
