@@ -4,14 +4,15 @@ This web app is a group project for CSCE445. We have plans to utilize Spotify's 
 ## Technologies Used
 * JavaScript ES6
 * node
-** express
-** socket.io
-** p5.js
+ ** express
+ ** socket.io
+ ** p5.js
 * jquery/html/css
 
-# Usage
+## Usage
 1. Clone repo
 2. cd to directory, run:
+```
 $ node server.js
-
+```
 3. Navigate to localhost:8000
