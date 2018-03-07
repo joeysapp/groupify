@@ -3,14 +3,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Groupify - Music-based Group Solutions</title>
+<title>groupify</title>
 
 <!-- Stylesheets and Javascript -->
 <link rel="stylesheet" href="resources/css/main.css">
 
 <script src="vendors/jquery/jquery-git.min.js"></script>
 <script src="vendors/jquery/jquery-ui.min.js"></script>
-<script src="vendors/spotify-web-api-js/src/spotify-web-api.js"></script>
+<!-- <script src="vendors/spotify-web-api-js/src/spotify-web-api.js"></script> -->
+<script src="vendors/socket.io/socket.io.slim.js"></script>
 
 <script src="resources/js/pquery-0.1.js"></script>
 <script src="resources/js/groupify-0.1.js"></script>
@@ -19,7 +20,7 @@
 
 <body>
 	<div id="content" style="display: inline-block">
-		<div id="title">Groupify</div>
+		<div id="title">groupify</div>
 		<input id="inputtext" type="text" name="username" value="spotify username" >
 		<input id="gobutton" type="submit" value="go">
 		<div id="placed_users"></div>

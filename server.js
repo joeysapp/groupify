@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 
 // Web sockets
+var clients = [];
+var ID = 0; // this should be a hash later if we really care
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
@@ -9,13 +11,22 @@ var io = require('socket.io')(server);
 var path = require('path');
 var useragent = require('useragent');
 
-var server = app.listen(8000, "0.0.0.0", function(){
+server.listen(8000, "0.0.0.0", function(){
 	console.log("\tgroupify.server running: "+server.address());
 	console.log("\tgroupify.app running: "+app)
 });
 
 // Socket details
-io.on('connection', function(sock){
+io.on('connection', function(socket){
+
+	clients.push({
+		id: ID++,
+		socket: socket
+	});
+
+	console.log("clients: "+clients.length);
+
+
 	socket.on('socket_emission_from_client', function(data){
 		console.log('server-side socket_emission_from_client received');
 

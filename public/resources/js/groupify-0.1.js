@@ -2,34 +2,9 @@
 // upon addition/deletion. We'll see if that's possible
 var prev = null;
 
+// 
+
 function onUserInput(queryTerm) {
-
-	// abort previous request, if any
-	if (prev !== null) {
-		// prev.abort();
-	}
-
-	// store the current promise in case we need to abort it
-	// prev = spotifyApi.searchTracks(queryTerm, {limit: 5});
-	// prev.then(function(data) {
-	// 	// clean the promise so it doesn't call abort
-	// 	prev = null;
-
-	// 	console.log(data);
-
-	// 	// ...render list of search results...
-
-	// 	}, function(err) {
-	// 		console.error(err);
-	// 	});
-
-	var username = $('#inputtext').val();
-	prev = spotifyApi.getUserPlaylists(username, {limit: 5}).then(function(data){
-		console.log("data:", data.body);
-	}, function(err){
-		console.log(err);
-	});
-	
 
 }
 
@@ -52,6 +27,8 @@ function addName(e){
 
 // Would be good to find out when this is called on the js stack
 $(document).ready(function() {
+	socket = io.connect();
+
 	// Handling clicking of our button
 	$('#gobutton').click(function(e){
 		addName(e);
