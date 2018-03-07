@@ -10,6 +10,7 @@ var io = require('socket.io')(server);
 // Misc
 var path = require('path');
 var useragent = require('useragent');
+var client = require('./public/resources/js/client-0.1.js');
 
 server.listen(8000, "0.0.0.0", function(){
 	console.log("groupify.server running");
@@ -17,7 +18,7 @@ server.listen(8000, "0.0.0.0", function(){
 
 // Socket details
 io.on('connection', function(socket){
-	clients[socket.id] = socket;
+	clients[socket.id] = new client(socket,socket.id,0,0);
 	// socket.emit('init', clients);
 	console.log('socket.clients['+socket.id+"] connected");
 
@@ -26,18 +27,11 @@ io.on('connection', function(socket){
 		delete clients[socket.id];
 	});
 
+	socket.on('authenticateUser', function(d){
+		console.log("authenticateUser("+d+")");
+	})
 });
 
-// So this could be used to select a client and do something to them!
-// i.e. collision detection or something..
-// followersManager.on('connection', function (followerName) {
-//     // Find the given socket in any way
-//     var socket = clients.find(function (client) {
-//         return client.id == 1;
-//     }, this);
-//     // Then use this special socket
-//     socket.emit('followers.new', followerName);
-// });
 
 app.use(express.static('public'));
 
@@ -63,4 +57,12 @@ var spotifyApi = new SpotifyWebApi({
 	clientSecret : 'bdba2d495125420e8bcf75135ddf8cb6',
 	redirectUri : '0.0.0.0:8000/authResponse'
 });
+
+// This would be if I wanted to have things happening
+// to the users without any causation
+// i.e. no one else doing anything (perlin noise movement!)
+// setInterval(function foo(){
+// 	console.log("helo");
+
+// }, 10000);
 

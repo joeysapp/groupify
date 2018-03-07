@@ -1,7 +1,8 @@
-
-
+var username = "joeysapp";
+var auth_token = undefined;
 
 // Would be good to find out when this is called on the js stack
+
 $(document).ready(function() {
 	socket = io.connect();
 
@@ -14,9 +15,11 @@ $(document).ready(function() {
 	})
 
 	// Handling clicking of our button
-	$('#gobutton').click(function(e){
-		addName(e);
-		onUserInput(e);
+	$('#inputbutton').click(function(e){
+		if ($('#inputtext').val().length > 0){
+			console.log("client.socket.emit->"+"authenticateUser("+$('#inputtext').val()+")");
+			socket.emit('authenticateUser', $('#inputtext').val());
+		}
 	});
 
 	// Handling pressing enter in the text field
