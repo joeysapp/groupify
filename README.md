@@ -6,6 +6,8 @@ This web app is a group project for CSCE445. We have plans to utilize Spotify's 
 * node
   * express
   * socket.io
+  * useragent
+  * path
   * spotify-web-api-node
 * p5.js
 * jquery/html/css
