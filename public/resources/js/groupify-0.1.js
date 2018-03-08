@@ -20,7 +20,7 @@ $(document).ready(function() {
 		this.clients[d.id] = d;
 	})
 
-	function addUser(e){
+	function getUserInput(e){
 		var username = $('#inputtext').val();
 
 		// validator-js
@@ -42,13 +42,13 @@ $(document).ready(function() {
 
 	// Handling clicking of our button
 	$('#inputbutton').click(function(e){
-		addUser(e);
+		getUserInput(e);
 	});
 
 	// Handling pressing enter in the text field
 	$('#inputtext').on('keypress', function(e){
 		if (e.which === 13){
-			addUser(e);
+			getUserInput(e);
 		}
 	});
 });
