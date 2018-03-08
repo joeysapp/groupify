@@ -13,8 +13,9 @@ $(document).ready(function() {
 		for (var key in d){
 			var tmp = "<div class='client' id="+key+">Loading...</div>"
 			$('#clients').append(tmp);
-			if (typeof d.name !== 'undefined'){
-				$('#'+key).html(d.name);
+			if (typeof d[key].name !== 'undefined'){
+				console.log("setting name");
+				$('#'+key).html(d[key].name);
 			}
 
 		}
@@ -54,8 +55,8 @@ $(document).ready(function() {
 	socket.on('addClient', function(d){
 		clients[d.id] = d;
 		console.log('client.addClient->clients.length: '+clientCount());
-		var name = d.id;
-		var tmp = "<div class='client' id="+name+">tmp</div>"
+		var name = typeof d.name === 'undefined' ? d.name : "tssmp";
+		var tmp = "<div class='client' id="+d.id+">"+name+"</div>"
 		$('#clients').append(tmp);
 	})
 
