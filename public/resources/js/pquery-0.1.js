@@ -7,6 +7,7 @@ var sketch = function(p){
 	p.setup = function(){
 		this.canvas = p.createCanvas(p.windowWidth, p.windowHeight*(1-0.14));
 		this.canvas.parent('view');
+		console.log("Connecting to room with "+Object.keys(clients).length+" other users.");
 	}
 
 	p.draw = function(){
@@ -15,6 +16,10 @@ var sketch = function(p){
 		p.noFill();
 		p.strokeWeight(3);
 		// p.fill(255, 0, 0);
+		for (var key in clients){
+			// console.log(clients[key]);
+		}
+
 
 	}
 

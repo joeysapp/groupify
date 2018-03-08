@@ -8,11 +8,12 @@ var clients = {};
 $(document).ready(function() {
 
 	socket.on('initClients', function(d){
-		this.clients = d;
+		console.log("wow!");
+		clients = d;
 	})
 
-	socket.on('receiveClients', function(d){
-		this.clients = d;
+	socket.on('sendClient', function(d){
+		clients[d.id] = d;
 	})
 
 	socket.on('addClient', function(d){

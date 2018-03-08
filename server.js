@@ -18,11 +18,13 @@ server.listen(8000, "0.0.0.0", function(){
 
 // Socket details
 io.on('connection', function(socket){
-	clients[socket.id] = new client(socket,socket.id,[0,0]);
+	clients[socket.id] = new client(socket.id,[0,0]);
 	client_ct += 1;
 	// socket.emit('init', clients);
 	console.log('socket.clients['+socket.id+"] connected");
 	console.log('socket.clients.length = '+client_ct);
+	
+	socket.emit('initClients', clients);
 
 	socket.on('disconnect', function(){
 		client_ct -= 1;
@@ -36,7 +38,8 @@ io.on('connection', function(socket){
 
 		// Set our clients info from the socket.id!
 		clients[socket.id].name = d;
-		console.log(d);
+		console.log(clients[socket.id]);
+		io.local.emit('sendClient', clients[socket.id]);
 
 		// io.socket.emit('sendClients', clients);
 	})
