@@ -3,7 +3,7 @@ var app = express();
 
 // Web sockets
 var clients = {};
-var ID = 0; // this should be a hash later if we really care
+var client_ct = 0;
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
@@ -18,17 +18,26 @@ server.listen(8000, "0.0.0.0", function(){
 
 // Socket details
 io.on('connection', function(socket){
-	clients[socket.id] = new client(socket,socket.id,0,0);
+	clients[socket.id] = new client(socket,socket.id,[0,0]);
+	client_ct += 1;
 	// socket.emit('init', clients);
 	console.log('socket.clients['+socket.id+"] connected");
+	console.log('socket.clients.length = '+client_ct);
 
 	socket.on('disconnect', function(){
-		console.log('socket.clients['+socket.id+"] disconnected");
+		client_ct -= 1;
+		console.log('socket.clients['+clients[socket.id].pos+"] disconnected");
+		console.log('socket.clients.length = '+client_ct);
+
 		delete clients[socket.id];
 	});
 
 	socket.on('authenticateUser', function(d){
-		console.log("authenticateUser("+d+")");
+
+		// Set our clients info from the socket.id!
+		clients[socket.id].name = d;
+
+		// io.socket.emit('sendClients', clients);
 	})
 });
 

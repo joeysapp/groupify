@@ -1,17 +1,22 @@
 var username = "joeysapp";
 var auth_token = undefined;
+var	socket = io.connect();
 
 // Would be good to find out when this is called on the js stack
 
 $(document).ready(function() {
-	socket = io.connect();
+	clients = undefined;
 
-	socket.on('init', function(d){
-		console.log("init ");
+	socket.on('initClients', function(d){
+		this.client = d;
 	})
 
-	socket.on('add_user', function(d){
-		console.log("add_user "+d);
+	socket.on('sendClients', function(d){
+		this.client = d;
+	})
+
+	socket.on('addClient', function(d){
+		// console.log("add_user "+d);
 	})
 
 	// Handling clicking of our button
