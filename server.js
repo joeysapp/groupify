@@ -36,6 +36,7 @@ io.on('connection', function(socket){
 
 		// Set our clients info from the socket.id!
 		clients[socket.id].name = d;
+		console.log(d);
 
 		// io.socket.emit('sendClients', clients);
 	})
