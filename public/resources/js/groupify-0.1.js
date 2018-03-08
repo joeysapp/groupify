@@ -8,17 +8,30 @@ var clients = {};
 $(document).ready(function() {
 
 	socket.on('initClients', function(d){
-		console.log("wow!");
+		// console.log(d);
+		// for (key in d){
+		// 	clients[key] = d[key];
+		// }
 		clients = d;
+		console.log('client.initClients->clients.length: '+clientCount());
 	})
+
+	function clientCount(){
+		console.log('client.client.length: ');
+		var j = 0;
+		for (var key in clients){
+			j += 1;
+		}
+		return j;
+	};
 
 	socket.on('sendClient', function(d){
 		clients[d.id] = d;
 	})
 
 	socket.on('addClient', function(d){
-		// console.log("add_user "+d);
-		this.clients[d.id] = d;
+		clients[d.id] = d;
+		console.log('client.addClient->clients.length: '+clientCount());
 	})
 
 	function getUserInput(e){

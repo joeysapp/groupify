@@ -1,8 +1,6 @@
 class Client {
-	constructor(socket,id,pos){
-		this.socket = socket;
+	constructor(id){
 		this.id = id;
-		this.pos = pos;
 		this.name = undefined;
 		this.icon = undefined;
 	}
@@ -15,7 +13,7 @@ class Client {
 		this.name = name;
 	}
 
-	
+
 };
 
 module.exports = Client;
