@@ -3,10 +3,13 @@ class Client {
 		this.id = id;
 		this.name = undefined;
 		this.icon = undefined;
+		this.token = undefined
+		this.token_refresh = undefined;
+
 	}
 
-	display(){
-		rect(this.pos.x, this.pos.y, 50, 50);
+	getName(){
+		return this.name;
 	}
 
 	setName(name){

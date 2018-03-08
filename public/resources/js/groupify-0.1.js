@@ -8,16 +8,30 @@ var clients = {};
 $(document).ready(function() {
 
 	socket.on('initClients', function(d){
-		// console.log(d);
-		// for (key in d){
-		// 	clients[key] = d[key];
-		// }
 		clients = d;
 		console.log('client.initClients->clients.length: '+clientCount());
+		for (var key in d){
+			var tmp = "<div class='client' id="+key+">Loading...</div>"
+			$('#clients').append(tmp);
+			if (typeof d.name !== 'undefined'){
+				$('#'+key).html(d.name);
+			}
+
+		}
+	})
+
+	socket.on('removeClient', function(d){
+		delete clients[d.id];
+		$('#'+d.id).remove();
+		console.log('client.removeClient->clients.length: '+clientCount());
+		// for (var key in d){
+		// 	var name = d.id;
+		// 	var tmp = "<div class='client' id="+name+">foo</div>"
+		// 	$('#clients').append(tmp);
+		// }
 	})
 
 	function clientCount(){
-		console.log('client.client.length: ');
 		var j = 0;
 		for (var key in clients){
 			j += 1;
@@ -25,13 +39,24 @@ $(document).ready(function() {
 		return j;
 	};
 
-	socket.on('sendClient', function(d){
-		clients[d.id] = d;
+	socket.on('updateClient', function(d){
+		if (clients.hasOwnProperty(d.id)){
+			console.log('client.updateClient->SUCCESS');
+			clients[d.id] = d;
+			if (typeof d.name !== 'undefined'){
+				$('#'+socket.id).html(d.name);
+			}		
+		} else {
+			console.log('client.updateClient->FAILURE');
+		}
 	})
 
 	socket.on('addClient', function(d){
 		clients[d.id] = d;
 		console.log('client.addClient->clients.length: '+clientCount());
+		var name = d.id;
+		var tmp = "<div class='client' id="+name+">tmp</div>"
+		$('#clients').append(tmp);
 	})
 
 	function getUserInput(e){
@@ -47,8 +72,8 @@ $(document).ready(function() {
 			$('#loggedin').show();
 			$('#loggedin').css("display","flex");
 			$('#username').html(username);
+			$('#'+socket.id).html(username);
 			this.username = username;
-
 		} else {
 			console.log("Enter a username!");
 		}

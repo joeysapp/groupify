@@ -18,21 +18,23 @@ server.listen(8000, "0.0.0.0", function(){
 
 // Socket details
 io.on('connection', function(socket){
-	var tmp = new client(socket.id,[0,0]);
-	clients[socket.id] = tmp;
-	client_ct += 1;
-	// socket.emit('init', clients);
 	console.log('socket.clients['+socket.id+"] connected");
 	console.log('socket.clients.length = '+client_ct);
 
+	// Send all current client objects to the socket
 	socket.emit('initClients', clients);
+
+	var tmp = new client(socket.id,[0,0]);
+	clients[socket.id] = tmp;
+	client_ct += 1;
+	// Send the new client to all other connected sockets
 	io.local.emit('addClient', tmp);
 
 	socket.on('disconnect', function(){
 		client_ct -= 1;
 		console.log('socket.clients['+clients[socket.id].pos+"] disconnected");
 		console.log('socket.clients.length = '+client_ct);
-
+		io.local.emit('removeClient', tmp);
 		delete clients[socket.id];
 	});
 
@@ -40,7 +42,8 @@ io.on('connection', function(socket){
 
 		// Set our clients info from the socket.id!
 		clients[socket.id].name = d;
-		console.log(clients[socket.id]);
+		io.local.emit('updateClient', clients[socket.id]);
+		// console.log(clients[socket.id]);
 		// io.local.emit('sendClient', clients[socket.id]);
 
 		// io.socket.emit('sendClients', clients);

@@ -31,6 +31,15 @@ input {
 	display:flex;
 }
 
+.client {
+	width:20vh;
+	height:20vh;
+	background-color:white;
+	margin:1em;
+	padding:1em;
+
+}
+
 .mmb {
 	font-family: Inconsolata-Regular;
 	/*font-size: 4vw;*/
