@@ -1,19 +1,20 @@
 class Client {
 	constructor(id){
 		this.id = id;
-		this.name = undefined;
+		this.username = undefined;
 		this.icon = undefined;
 		this.token = undefined
 		this.token_refresh = undefined;
+		this.status = "Init";
 
 	}
 
-	getName(){
-		return this.name;
+	getUsername(){
+		return this.username;
 	}
 
-	setName(name){
-		this.name = name;
+	setUsertname(username){
+		this.username = username;
 	}
 
 

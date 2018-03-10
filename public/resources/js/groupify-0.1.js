@@ -1,22 +1,20 @@
-var username = "joeysapp";
-var auth_token = undefined;
 var	socket = io.connect();
 var clients = {};
+
+var auth_token = undefined;
+var username = undefined;
+var id = socket.id;
 
 // Would be good to find out when this is called on the js stack
 
 $(document).ready(function() {
 
 	socket.on('initClients', function(d){
+		// Making sure on server reload we've 
 		clients = d;
 		console.log('client.initClients->clients.length: '+clientCount());
 		for (var key in d){
-			var tmp = "<div class='client' id="+key+">Loading...</div>"
-			$('#clients').append(tmp);
-			if (typeof d[key].name !== 'undefined'){
-				console.log("setting name");
-				$('#'+key).html(d[key].name);
-			}
+			addClientDiv(d[key]);
 
 		}
 	})
@@ -25,11 +23,6 @@ $(document).ready(function() {
 		delete clients[d.id];
 		$('#'+d.id).remove();
 		console.log('client.removeClient->clients.length: '+clientCount());
-		// for (var key in d){
-		// 	var name = d.id;
-		// 	var tmp = "<div class='client' id="+name+">foo</div>"
-		// 	$('#clients').append(tmp);
-		// }
 	})
 
 	function clientCount(){
@@ -44,8 +37,9 @@ $(document).ready(function() {
 		if (clients.hasOwnProperty(d.id)){
 			console.log('client.updateClient->SUCCESS');
 			clients[d.id] = d;
-			if (typeof d.name !== 'undefined'){
-				$('#'+socket.id).html(d.name);
+			if (typeof d.username !== 'undefined'){
+				$('#'+d.id).children('.client.username').html(d.username);
+				$('#'+d.id).children('.client.status').css("background-color","green");
 			}		
 		} else {
 			console.log('client.updateClient->FAILURE');
@@ -53,12 +47,28 @@ $(document).ready(function() {
 	})
 
 	socket.on('addClient', function(d){
-		clients[d.id] = d;
-		console.log('client.addClient->clients.length: '+clientCount());
-		var name = typeof d.name === 'undefined' ? d.name : "tssmp";
-		var tmp = "<div class='client' id="+d.id+">"+name+"</div>"
-		$('#clients').append(tmp);
+		addClientDiv(d);
 	})
+
+	function addClientDiv(d){
+		clients[d.id] = d;
+		console.log('client.addClientDiv->clients.length: '+clientCount());
+		var username = typeof d.username === 'undefined' ? d.id : d.username;
+		var tmp = "<div class='client' id="+d.id+"></div>"
+		$('#clients').append(tmp);
+		// if (d.id == socket.id){
+		$('#'+d.id).append("<div class='client username'>"+username+"</div>");
+		$('#'+d.id).append("<div class='client toolbar'>toobar</div>");
+		$('#'+d.id).append("<div class='client artists'>none</div>");
+		if (d.status == 'Authorized'){ 
+			var col = 'green';
+		} else {
+			var col = 'yellow';
+		}
+		$('#'+d.id).append("<div class='client status' style='background-color:"+col+"'></div>");
+
+		// }
+	}
 
 	function getUserInput(e){
 		var username = $('#inputtext').val();
@@ -73,7 +83,8 @@ $(document).ready(function() {
 			$('#loggedin').show();
 			$('#loggedin').css("display","flex");
 			$('#username').html(username);
-			$('#'+socket.id).html(username);
+			// $('#'+socket.id).children('.username').html(username);
+
 			this.username = username;
 		} else {
 			console.log("Enter a username!");
@@ -83,6 +94,14 @@ $(document).ready(function() {
 	// Handling clicking of our button
 	$('#inputbutton').click(function(e){
 		getUserInput(e);
+	});
+
+	$('#logoutbutton').click(function(e){
+		console.log('client.logout nonfunctional');
+		// delete clients[id];
+		// $('#'+id).remove();
+		// socket.emit('deleteClient', id);
+		// console.log('client.logoutbutton->clients.length: '+clientCount());
 	});
 
 	// Handling pressing enter in the text field

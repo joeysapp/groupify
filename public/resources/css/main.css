@@ -32,13 +32,56 @@ input {
 }
 
 .client {
-	width:20vh;
-	height:20vh;
+	width:30vw;
+	height:30vh;
 	background-color:white;
 	margin:1em;
-	padding:1em;
+	/*padding:1em;*/
+}
+
+.client.username {
+	font-size: 3vw;
+	/*display:inline;*/
+	width:100%;
+	height:15%;
+	color:white;
+	text-align:center;
+	padding-top:2.5%;
+	padding-bottom:2.5%;
+	margin:0em;
+
+	background-color:black;
+}
+
+.client.toolbar {
+	height:10%;
+	width:100%;
+	margin:0em;
+	background-color: grey;
+	/*display:inline;*/
 
 }
+
+.client.artists {
+	height:60%;
+	margin:0em;
+	/*display:inline;*/
+
+
+}
+
+
+.client.status {
+	font-size:3vw;
+	margin:0em;
+	/*position:.relative;*/
+	height:10%;
+	color:red;
+	background-color:yellow;
+	bottom:0px;
+	left:0px;
+}
+
 
 .mmb {
 	font-family: Inconsolata-Regular;

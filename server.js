@@ -38,16 +38,30 @@ io.on('connection', function(socket){
 		delete clients[socket.id];
 	});
 
+	socket.on('deleteClient', function(d){
+		delete clients[d.id];
+	});
+
 	socket.on('authenticateUser', function(d){
+		console.log('server.authenticateUser');
 
 		// Set our clients info from the socket.id!
-		clients[socket.id].name = d;
+		clients[socket.id].username = d;
+
+		console.log(clients[socket.id]);
+
+
+		if (true){
+			clients[socket.id].status = 'Authorized';
+		} else {
+			clients[socket.id].status = 'FailedAuth';
+		}
 		io.local.emit('updateClient', clients[socket.id]);
 		// console.log(clients[socket.id]);
 		// io.local.emit('sendClient', clients[socket.id]);
 
 		// io.socket.emit('sendClients', clients);
-	})
+	});
 });
 
 
