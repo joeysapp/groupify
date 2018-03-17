@@ -2,12 +2,12 @@
 This web app is a group project for CSCE445. We have plans to utilize Spotify's Web api, node, express, socket.io and several other node packages to deliver a unique and meaningful experience.
 
 ## Todo
-Replace entire Client class system with React
+Spotify Authorization 
+~~Replace entire Client class system with React~~ - Shelved for now, wew
 
 ## Technologies Used
 * JavaScript ES6
 * node
-  * React
   * express
   * socket.io
   * useragent
