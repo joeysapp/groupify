@@ -4,7 +4,7 @@ This web app aims to unite friends via similar music tastes using a variety of J
 ## Todo
 ~~Spotify Authorization~~
 
-~~Persistant storage~~
+~~Persistent storage~~
 
 
 ## Technologies Used
