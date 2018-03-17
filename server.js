@@ -76,9 +76,9 @@ app.get('/', function(req, res){
 });
 app.get('/authResponse', function(req, res){
 	var agent = useragent.parse(req.headers['user-agent']);
+	var code = req.query.code;
 	// console.log('get: \'/authResponse\' groupify.req.headers: '+req.headers);
-	console.log('get: \'/authResponse\' groupify.agent: '+agent);
-
+	console.log('get: \'/authResponse\' groupify.agent: '+agent+', token: '+code);
 	// res.sendFile(path.join(__dirname + '/index.html'));
 });
 
@@ -94,13 +94,30 @@ var SpotifyWebApi = require('spotify-web-api-node');
 var spotifyApi = new SpotifyWebApi({
 	clientId : '6b745474e58f4ee78852ceb8a3a3e30e',
 	// clientSecret : 'bdba2d495125420e8bcf75135ddf8cb6',
-	redirectUri : 'http://localhost:8000/callback/'
+	redirectUri : 'http://localhost:8000/authResponse/'
 });
 
 var scopes = [];
 var state = 'getting-data';
 var authorizeURL = spotifyApi.createAuthorizeURL(scopes,state);
 console.log(authorizeURL);
+
+
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('data/users.db', function(e){
+	console.log("hmmmm,"+e);
+});
+
+// db.run("CREATE TABLE users (username TEXT)");
+
+
+db.all("SELECT * FROM users;", function(err, row){
+	console.log(row);
+})
+
+db.close(function(){
+	console.log("yo");
+})
 
 // This would be if I wanted to have things happening
 // to the users without any causation

@@ -6,7 +6,7 @@ var username = undefined;
 var id = socket.id;
 
 // Would be good to find out when this is called on the js stack
-
+// aka make this better
 $(document).ready(function() {
 
 	socket.on('initClients', function(d){
