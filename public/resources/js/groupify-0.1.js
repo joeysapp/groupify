@@ -96,6 +96,13 @@ $(document).ready(function() {
 		getUserInput(e);
 	});
 
+	// Handling pressing enter in the text field
+	$('#inputtext').on('keypress', function(e){
+		if (e.which === 13){
+			getUserInput(e);
+		}
+	});
+
 	$('#logoutbutton').click(function(e){
 		console.log('client.logout nonfunctional');
 		// delete clients[id];
@@ -104,10 +111,5 @@ $(document).ready(function() {
 		// console.log('client.logoutbutton->clients.length: '+clientCount());
 	});
 
-	// Handling pressing enter in the text field
-	$('#inputtext').on('keypress', function(e){
-		if (e.which === 13){
-			getUserInput(e);
-		}
-	});
+
 });

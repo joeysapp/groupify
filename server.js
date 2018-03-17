@@ -82,13 +82,25 @@ app.get('/authResponse', function(req, res){
 	// res.sendFile(path.join(__dirname + '/index.html'));
 });
 
+app.get('/callback', function(req, res){
+	console.log('get: \'/callback');
+	console.log(req.query);
+	// res.sendFile(path.join(__dirname + '/index.html'));
+
+})
+
 // Spotify stuff!
 var SpotifyWebApi = require('spotify-web-api-node');
 var spotifyApi = new SpotifyWebApi({
 	clientId : '6b745474e58f4ee78852ceb8a3a3e30e',
-	clientSecret : 'bdba2d495125420e8bcf75135ddf8cb6',
-	redirectUri : '0.0.0.0:8000/authResponse'
+	// clientSecret : 'bdba2d495125420e8bcf75135ddf8cb6',
+	redirectUri : 'http://localhost:8000/callback/'
 });
+
+var scopes = [];
+var state = 'getting-data';
+var authorizeURL = spotifyApi.createAuthorizeURL(scopes,state);
+console.log(authorizeURL);
 
 // This would be if I wanted to have things happening
 // to the users without any causation
