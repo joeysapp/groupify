@@ -2,12 +2,10 @@
 This web app aims to unite friends via similar music tastes using a variety of Javascript libraries.
 
 ## Todo
-```
 ~~Spotify Authorization~~
+
 ~~Persistant storage~~
 
-
-```
 
 ## Technologies Used
 * JavaScript ES6
