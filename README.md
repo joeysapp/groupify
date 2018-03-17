@@ -7,6 +7,7 @@ Replace entire Client class system with React
 ## Technologies Used
 * JavaScript ES6
 * node
+  * React
   * express
   * socket.io
   * useragent
