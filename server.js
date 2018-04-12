@@ -26,8 +26,32 @@ var client_secret = require('./data/client_secret.js').CLIENT_SECRET;
 var redirect_uri = 'http://localhost:8000/authResponse/';
 var querystring = require('querystring');
 
+var firebase = require('firebase');
+var config = {
+  apiKey: "AIzaSyCEqXgSFuRFp0Gb9cGfozy6qBIJz563G4k",
+  authDomain: "groupify-tamu.firebaseapp.com",
+  databaseURL: "https://groupify-tamu.firebaseio.com",
+};
+firebase.initializeApp(config);
+var db = firebase.database();
+
 // Util
 var client = require('./public/resources/js/client-0.1.js');
+
+function getAllClients(){
+	console.log('currently retrieving users/ from firebase');
+	var all_keys = firebase.database().ref('users/').once('value').then(function(snapshot){
+		snapshot.forEach(child => {
+			var snapshot_result = child.val();
+			var client_uuid = snapshot_result.uuid;
+			clients[client_uuid] = snapshot_result;
+			clients['retrieved_successfully'] = true;
+			// console.log(snapshot_result);
+			// ^ this is now the animal!
+			// console.log('getAllAnimals()-> this.animal_dict:');
+		});
+	});
+}
 
 server.listen(8000, '0.0.0.0', function(){
 	console.log('groupify.server running on localhost:8000');
@@ -40,12 +64,11 @@ server.listen(8000, '0.0.0.0', function(){
 // Socket details
 io.on('connection', function(socket){
 	console.log('socket.clients['+socket.id+'] connected');
-	console.log('I see cookeis:');
-	console.log(socket.handshake.headers.cookie);
 	// console.log('socket.clients.length = '+client_ct);
 
 	// Send all current client objects to the socket
 	socket.emit('initClients', clients);
+	// getAllClients();
 
 	var tmp = new client(socket.id);
 	clients[socket.id] = tmp;
@@ -80,6 +103,7 @@ io.on('connection', function(socket){
 
 app.use(express.static('public'));
 
+
 app.get('/login', (req, res) => {
 	// Random UUID to identify the user (set a 'state');
 	// This prevents collisions in the current
@@ -89,7 +113,7 @@ app.get('/login', (req, res) => {
 	var stateKey = 'spotify-auth-state';
 	res.cookie(stateKey, state);
 
-	var scope = 'user-read-private';
+	var scope = 'playlist-read-private';
 
 	if (typeof client_secret === 'undefined'){
 		console.log('You need the client secret file from joey');
@@ -126,48 +150,60 @@ app.get('/authResponse', function(req, res) {
 		error: 'state_mismatch'
 		}));
 	} else {
+		res.clearCookie(stateKey);
 		var authOptions = {
 			url: 'https://accounts.spotify.com/api/token',
 			form: {
-			code: code,
-			redirect_uri: redirect_uri,
-			grant_type: 'authorization_code'
-		},
-		headers: {
-			'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
-		},
-		json: true
-	};
+				code: code,
+				redirect_uri: redirect_uri,
+				grant_type: 'authorization_code'
+			},
+			headers: {
+				'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+			},
+			json: true
+		};
 
-	request.post(authOptions, function(error, response, body) {
-		if (!error && response.statusCode === 200) {
-			var access_token = body.access_token,
-			refresh_token = body.refresh_token;
+		var tmp_uuid = uuidv4();
+		res.cookie('uuid', tmp_uuid);
+		request.post(authOptions, function(error, response, body) {
+			if (!error && response.statusCode === 200) {
+				var access_token = body.access_token,
+				refresh_token = body.refresh_token;
 
-			var options = {
-				url: 'https://api.spotify.com/v1/me',
-				headers: { 'Authorization': 'Bearer ' + access_token },
-				json: true
-			};
-			// use the access token to access the Spotify Web API
-			request.get(options, function(error, response, body) {
-				console.log('u got here btw!');
-				console.log(body);
-			});
+				var options = {
+					url: 'https://api.spotify.com/v1/me/playlists',
+					headers: { 'Authorization': 'Bearer ' + access_token },
+					json: true
+				};
+				// use the access token to access the Spotify Web API
+				request.get(options, function(error, response, body) {
+					playlists = [];
+					for (var item of body.items){
+						// These are urls to each of the user's
+						// followed playlists. Limit of 20 rn
+						console.log(item.href);
+						playlists.push(item.href);
+					}
+					// firebase.database().ref('users/').push(username);
+					var updates = {};
+					updates[tmp_uuid] = { 'uuid':tmp_uuid, 'followed_playlists': playlists };
+					firebase.database().ref('users/').update(updates);
+				});
 
-	// we can also pass the token to the browser to make requests from there
-			res.redirect('/#' +
-				querystring.stringify({
-					access_token: access_token,
-					refresh_token: refresh_token
-			}));
-		} else {
-			res.redirect('/#' +
-				querystring.stringify({
-					error: 'invalid_token'
-			}));
-		}
-	});
+		// we can also pass the token to the browser to make requests from there
+				res.redirect('/#' +
+					querystring.stringify({
+						access_token: access_token,
+						refresh_token: refresh_token
+				}));
+			} else {
+				res.redirect('/#' +
+					querystring.stringify({
+						error: 'invalid_token'
+				}));
+			}
+		});
 	}
 });
 
