@@ -11,6 +11,10 @@ $(document).ready(function() {
 
 	var spotifyLoginWindow;
 
+	if (document.cookie.includes('uuid')){
+		$('#loginbutton').hide();
+	}
+
 	// $.get(`http://${window.location.hostname}:8000/getAuthURL`, url => {
 	// 	// $('#auth').attr('href', url);
 	// 	$('#auth').show();
@@ -24,7 +28,9 @@ $(document).ready(function() {
 		clients = d;
 		console.log('client.initClients->clients.length: '+clientCount());
 		for (var key in d){
-			addClientDiv(d[key]);
+			if (typeof d[key].id !== 'undefined'){
+				addClientDiv(d[key]);
+			}
 		}
 	})
 
