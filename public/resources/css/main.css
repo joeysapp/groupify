@@ -13,6 +13,11 @@ button {
 
 }
 
+@font-face {
+	font-family: Inconsolata-Regular;
+	src: url(../data/Inconsolata-Regular.ttf);
+}
+
 /*rgb(25,213,72)*/
 
 
