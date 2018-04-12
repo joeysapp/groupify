@@ -18,6 +18,8 @@ var cookie = require('cookie');
 var moment = require('moment');
 var request = require('request');
 var cookieParser = require('cookie-parser');
+var cookieParserio = require('socket.io-cookie');
+
 app.use(cookieParser());
 
 // Spotify API creds!
@@ -44,6 +46,7 @@ var client = require('./public/resources/js/client-0.1.js');
 		snapshot.forEach(child => {
 			var snapshot_result = child.val();
 			var client_uuid = snapshot_result.uuid;
+			console.log('PULLED DATA of: '+snapshot_result.id);
 			clients[client_uuid] = snapshot_result;
 			clients['retrieved_successfully'] = true;
 		});
@@ -55,17 +58,16 @@ server.listen(8000, '0.0.0.0', function(){
 });
 
 // Socket details
+io.use(cookieParserio);
 io.on('connection', function(socket){
-	console.log('socket.clients['+socket.id+'] connected');
-	// console.log('socket.clients.length = '+client_ct);
+	if (typeof socket.handshake.headers.cookie !== 'undefined'){
+		var cookie_uuid = socket.handshake.headers.cookie.uuid;
+		console.log(cookie_uuid+' connected');
+	};
 
 	// Send all current client objects to the socket
 	socket.emit('initClients', clients);
 	// getAllClients();
-
-	var cookie = socket.handshake.headers;
-
-
 
 	// clients[socket.id] = tmp;
 	// client_ct += 1;
@@ -75,8 +77,12 @@ io.on('connection', function(socket){
 	// Telling other clients what to do when
 	// another connected user disconnects.
 	socket.on('disconnect', function(){
-		client_ct -= 1;
-		// console.log('socket.clients['+clients[socket.id].pos+'] disconnected');
+		if (typeof socket.handshake.headers.cookie !== 'undefined'){
+			var cookie_uuid = socket.handshake.headers.cookie.uuid;
+			console.log(cookie_uuid+' disconnected');
+		} else {
+			console.log('anonymous user disconnected');
+		}
 		// console.log('socket.clients.length = '+client_ct);
 		io.local.emit('removeClient', null);
 		delete clients[socket.id];
@@ -89,7 +95,6 @@ io.on('connection', function(socket){
 });
 
 app.use(express.static('public'));
-
 
 app.get('/login', (req, res) => {
 	// Random UUID to identify the user (set a 'state');
