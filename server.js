@@ -197,7 +197,7 @@ app.get('/authResponse', function(req, res) {
 				var options3 = {
 					url: 'https://api.spotify.com/v1/me/top/artists',
 					headers: { 'Authorization': 'Bearer ' + access_token },
-					json: true
+					json: true,
 				};
 				request.get(options3, function(error, response, body) {
 					top_artists = [];

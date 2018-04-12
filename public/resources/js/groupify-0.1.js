@@ -26,7 +26,6 @@ $(document).ready(function() {
 	socket.on('initClients', function(d){
 		// Making sure on server reload we've 
 		clients = d;
-		console.log('client.initClients->clients.length: '+clientCount());
 		for (var key in d){
 			if (typeof d[key].id !== 'undefined'){
 				addClientDiv(d[key]);
@@ -67,7 +66,6 @@ $(document).ready(function() {
 
 	function addClientDiv(d){
 		clients[d.id] = d;
-		console.log('client.addClientDiv->clients.length: '+clientCount());
 		var username = typeof d.username === 'undefined' ? d.id : d.username;
 		var tmp = '<div class=\'client\' id='+d.id+'></div>'
 		$('#clients').append(tmp);
