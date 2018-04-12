@@ -51,6 +51,7 @@ button {
 	height:60%;
 	margin:0em;
 	/*display:inline;*/
+	overflow-y: scroll;
 
 
 }

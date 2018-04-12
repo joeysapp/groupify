@@ -74,7 +74,13 @@ $(document).ready(function() {
 		// if (d.id == socket.id){
 		$('#'+d.id).append(`<div class='client username'>${username}</div>`);
 		$('#'+d.id).append(`<div class='client toolbar'>toobar</div>`);
-		$('#'+d.id).append(`<div class='client artists'>none</div>`);
+		$('#'+d.id).append(`<div class='client artists'></div>`);
+		var top_artists = clients[d.id].top_artists;
+		var list = $('<ul>').append(top_artists.map(a => $('<li>').append($('<a>').text(a))
+			)
+		);
+
+		$(`#${d.id}.client .artists`).append(list);
 		if (d.status == 'Authorized'){ 
 			var col = 'green';
 		} else {
