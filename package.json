@@ -18,12 +18,20 @@
   },
   "homepage": "https://github.com/joeysapp/groupify#readme",
   "dependencies": {
+    "cookie": "^0.3.1",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
     "lodash": "^4.17.5",
+    "moment": "^2.21.0",
     "path": "^0.12.7",
+    "querystring": "^0.2.0",
+    "request": "^2.85.0",
+    "save": "^2.3.2",
     "socket.io": "^2.0.4",
     "spotify-web-api-node": "^2.5.0",
     "sqlite3": "^4.0.0",
-    "useragent": "^2.3.0"
+    "useragent": "^2.3.0",
+    "uuid": "^3.2.1"
   }
 }

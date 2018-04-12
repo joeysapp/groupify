@@ -16,21 +16,6 @@ button {
 /*rgb(25,213,72)*/
 
 
-input {
-	font-family: Inconsolata-Regular;
-	font-size: 2.5vw;
-	height:100%;
-	font-color:red;
-	display:inline;
-	text-indent: 4vh;
-}
-
-#user_status {
-
-	width:80vw;
-	display:flex;
-}
-
 .client {
 	width:30vw;
 	height:30vh;

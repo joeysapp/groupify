@@ -2,20 +2,21 @@
 This web app aims to unite friends via similar music tastes using a variety of Javascript libraries.
 
 ## Todo
-~~Spotify Authorization~~
+```
+UX redo/flow for Spotify auth
+Think about storing info. Necessary or not?
+```
 
-~~Persistent storage~~
-
-
-## Technologies Used
-* JavaScript ES6
+## dependencies
+* [javascript ES6](http://es6-features.org/#Constants)
+* jquery
+* cookies
 * node
   * express
   * socket.io
   * useragent
   * path
   * spotify-web-api-node
-  * sqlite3
 * jquery/html/css
 
 ## Usage

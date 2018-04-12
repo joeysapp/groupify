@@ -9,13 +9,22 @@ var id = socket.id;
 // aka make this better
 $(document).ready(function() {
 
+	var spotifyLoginWindow;
+
+	// $.get(`http://${window.location.hostname}:8000/getAuthURL`, url => {
+	// 	// $('#auth').attr('href', url);
+	// 	$('#auth').show();
+	// 	$('#auth').click(e => {
+	// 		spotifyLoginWindow = window.open(url);
+	// 	});
+	// });
+
 	socket.on('initClients', function(d){
 		// Making sure on server reload we've 
 		clients = d;
 		console.log('client.initClients->clients.length: '+clientCount());
 		for (var key in d){
 			addClientDiv(d[key]);
-
 		}
 	})
 
@@ -39,7 +48,7 @@ $(document).ready(function() {
 			clients[d.id] = d;
 			if (typeof d.username !== 'undefined'){
 				$('#'+d.id).children('.client.username').html(d.username);
-				$('#'+d.id).children('.client.status').css("background-color","green");
+				$('#'+d.id).children('.client.status').css('background-color','green');
 			}		
 		} else {
 			console.log('client.updateClient->FAILURE');
@@ -54,62 +63,20 @@ $(document).ready(function() {
 		clients[d.id] = d;
 		console.log('client.addClientDiv->clients.length: '+clientCount());
 		var username = typeof d.username === 'undefined' ? d.id : d.username;
-		var tmp = "<div class='client' id="+d.id+"></div>"
+		var tmp = '<div class=\'client\' id='+d.id+'></div>'
 		$('#clients').append(tmp);
 		// if (d.id == socket.id){
-		$('#'+d.id).append("<div class='client username'>"+username+"</div>");
-		$('#'+d.id).append("<div class='client toolbar'>toobar</div>");
-		$('#'+d.id).append("<div class='client artists'>none</div>");
+		$('#'+d.id).append(`<div class='client username'>${username}</div>`);
+		$('#'+d.id).append(`<div class='client toolbar'>toobar</div>`);
+		$('#'+d.id).append(`<div class='client artists'>none</div>`);
 		if (d.status == 'Authorized'){ 
 			var col = 'green';
 		} else {
 			var col = 'yellow';
 		}
-		$('#'+d.id).append("<div class='client status' style='background-color:"+col+"'></div>");
+		$('#'+d.id).append(`<div class='client status' style='background-color:'${col}'></div>`);
 
 		// }
 	}
-
-	function getUserInput(e){
-		var username = $('#inputtext').val();
-
-		// validator-js
-		// get that^
-		if (username.length > 0){
-			console.log("client.socket.emit->"+"authenticateUser("+$('#inputtext').val()+")");
-			socket.emit('authenticateUser', $('#inputtext').val());
-
-			$('#preinit').remove();
-			$('#loggedin').show();
-			$('#loggedin').css("display","flex");
-			$('#username').html(username);
-			// $('#'+socket.id).children('.username').html(username);
-
-			this.username = username;
-		} else {
-			console.log("Enter a username!");
-		}
-	};
-
-	// Handling clicking of our button
-	$('#inputbutton').click(function(e){
-		getUserInput(e);
-	});
-
-	// Handling pressing enter in the text field
-	$('#inputtext').on('keypress', function(e){
-		if (e.which === 13){
-			getUserInput(e);
-		}
-	});
-
-	$('#logoutbutton').click(function(e){
-		console.log('client.logout nonfunctional');
-		// delete clients[id];
-		// $('#'+id).remove();
-		// socket.emit('deleteClient', id);
-		// console.log('client.logoutbutton->clients.length: '+clientCount());
-	});
-
 
 });
